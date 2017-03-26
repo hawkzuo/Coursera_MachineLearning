@@ -10,8 +10,8 @@ X_norm = bsxfun(@minus, X, mu);
 
 sigma = std(X_norm);
 X_norm = bsxfun(@rdivide, X_norm, sigma);
-
-
+% X_norm = X - ones(size(X,1),1)*mu;
+% X_norm = (X_norm) ./ (ones(size(X_norm,1),1)*sigma);
 % ============================================================
 
 end

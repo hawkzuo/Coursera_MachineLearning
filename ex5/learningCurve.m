@@ -14,12 +14,23 @@ function [error_train, error_val] = ...
 %   datasets, you might want to do this in larger intervals.
 %
 
+%X-> Training Set  Xval->Cross Validation Set
+
+
 % Number of training examples
 m = size(X, 1);
 
 % You need to return these values correctly
 error_train = zeros(m, 1);
 error_val   = zeros(m, 1);
+
+for i=1:m
+    iX = X(1:i,:);
+    iy = y(1:i);
+    iTheta = trainLinearReg(iX, iy, lambda);
+    error_train(i) = linearRegCostFunction(iX, iy, iTheta, 0);
+    error_val(i) = linearRegCostFunction(Xval, yval, iTheta, 0);
+end
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return training errors in 
@@ -50,17 +61,8 @@ error_val   = zeros(m, 1);
 %           
 %       end
 %
-
 % ---------------------- Sample Solution ----------------------
-
-
-
-
-
-
-
 % -------------------------------------------------------------
-
 % =========================================================================
 
 end
