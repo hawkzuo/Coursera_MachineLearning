@@ -17,6 +17,25 @@ J = 0;
 X_grad = zeros(size(X));
 Theta_grad = zeros(size(Theta));
 
+%S1:
+Z= X*transpose(Theta)-Y;
+selectedZ = Z.*(R==1);
+J=0.5* ( sum(sum(selectedZ.^2)) );
+for i=1:num_movies
+    grad_i = Theta'*selectedZ(i,:)';
+    X_grad(i,:) = grad_i';
+end
+for j=1:num_users
+    Tgrad_i = X'*selectedZ(:,j);
+    Theta_grad(j,:) = Tgrad_i';
+end
+%S2
+J=J+lambda/2 *( sum(sum((Theta.^2))) + sum(sum((X.^2))) );
+X_grad = X_grad + lambda * X;
+Theta_grad = Theta_grad + lambda * Theta;
+
+
+grad = [X_grad(:); Theta_grad(:)];
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost function and gradient for collaborative
 %               filtering. Concretely, you should first implement the cost
@@ -39,24 +58,5 @@ Theta_grad = zeros(size(Theta));
 %        Theta_grad - num_users x num_features matrix, containing the 
 %                     partial derivatives w.r.t. to each element of Theta
 %
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 % =============================================================
-
-grad = [X_grad(:); Theta_grad(:)];
-
 end
